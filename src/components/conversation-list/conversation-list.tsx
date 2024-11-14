@@ -1,31 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React from 'react';
 import './conversation-list.css';
 import ToolbarButton from '../toolbar-button/toolbar-button';
 import Toolbar from '../toolbar/toolbar';
 import ConversationSearch from '../conversation-search/conversation-search';
-import { ConversationAnswer } from '../../types/conversation';
 import ConversationListItem from '../conversation-list-item/conversation-list-item';
+import { TConversation } from '../../types/conversation';
 
-function ConversationList() {
-  const [conversations, setConversations] = useState<ConversationAnswer[]>([]);
-  useEffect(() => {
-    getConversations()
-  },[])
+type ConversationList = {
+  userConversations: TConversation;
+  onChatClick: (conversationTitle: string) => void;
+}
 
- const getConversations = () => {
-    axios.get('https://randomuser.me/api/?results=20').then(response => {
-        let newConversations = response.data.results.map((result) => {
-          return {
-            photo: result.picture.large,
-            name: `${result.name.first} ${result.name.last}`,
-            text: 'Hello world! This is a long message that needs to be truncated.'
-          };
-        });
-        setConversations([...conversations, ...newConversations])
-    });
-  }
-
+function ConversationList({userConversations, onChatClick}: ConversationList): JSX.Element {
+  
     return (
       <div className="conversation-list">
         <Toolbar
@@ -38,13 +25,14 @@ function ConversationList() {
           ]}
         />
         <ConversationSearch />
-        {
-          conversations.map(conversation =>
+        { userConversations &&
+          userConversations.posts.map((conversation, index) =>
             <ConversationListItem
-              key={conversation.name}
-              photo={conversation.photo}
-              name={conversation.name}
-              text={conversation.text}
+              key={index}
+              photo={'/src/assets/untitled-user.jpg'}
+              name={conversation.words[0]}
+              text={conversation.paragraph}
+              onClick={onChatClick}
             />
           )
         }

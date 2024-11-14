@@ -1,62 +1,51 @@
-export type Conversation = {
-    gender: string;
-    "name": {
-      "title": string;
-      "first": string;
-      "last": string;
-    },
-    "location": {
-      "street": {
-        "number": number;
-        "name": string;
-      },
-      "city": string;
-      "state": string;
-      "country": string;
-      "postcode": number,
-      "coordinates": {
-        "latitude": string;
-        "longitude": string;
-      },
-      "timezone": {
-        "offset": string;
-        "description": string;
-      }
-    },
-    "email": string;
-    "login": {
-      "uuid": string;
-      "username": string;
-      "password": string;
-      "salt": string;
-      "md5": string;
-      "sha1": string;
-      "sha256": string;
-    },
-    "dob": {
-      "date": string;
-      "age": number;
-    },
-    "registered": {
-      "date": string;
-      "age": number;
-    },
-    "phone": string;
-    "cell": string;
-    "id": {
-      "name": string;
-      "value": null
-    },
-    "picture": {
-      "large": string;
-      "medium": string;
-      "thumbnail": string;
-    },
-    "nat": string;
-  };
+export type TConversation= {
+  id: number;
+  favorite: boolean;
+  avatar: string;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  website: string;
+  address: TUserAddress;
+  company: TCompany;
+  posts: TPost[];
+  accountHistory: TAccountHistory[];
+}
 
-  export type ConversationAnswer = {
-    photo: string;
-    name: string;
-    text: string;
-  };
+export type TUserAddress = {
+      streetA: string;
+      streetB: string;
+      streetC: string;
+      streetD: string;
+      city: string;
+      state: string;
+      country: string;
+      zipcode: string;
+      geo: {
+        lat: string;
+        lng: string;
+      }
+}
+
+export type TCompany = {
+  name: string;
+  catchPhrase: string;
+  bs: string;
+}
+
+export type TPost = {
+    words: string[];
+    sentence: string;
+    sentences: string;
+    paragraph: string;
+  }
+
+export type TAccountHistory = {
+  amount: string;
+  date: string;
+  business: string;
+  name: string;
+  type: string;
+  account: string;
+}
