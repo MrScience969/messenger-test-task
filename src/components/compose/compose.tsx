@@ -11,7 +11,7 @@ function Compose({rightItems}: ComposeProps) {
         <input
           type="text"
           className="compose-input"
-          placeholder="Type a message, @name"
+          placeholder="Type a message"
         />
         {rightItems}
       </div>

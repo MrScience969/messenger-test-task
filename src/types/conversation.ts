@@ -35,7 +35,7 @@ export type TCompany = {
 }
 
 export type TPost = {
-    words: string[];
+    words: Array<string | null>;
     sentence: string;
     sentences: string;
     paragraph: string;

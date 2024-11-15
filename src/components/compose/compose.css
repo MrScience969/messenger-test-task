@@ -18,11 +18,13 @@
   }
   
   .compose-input {
-    flex: 1;
+    flex: 0.46;
+    height: 40px;
+    background: #f4f4f8;
+    padding: 8px 10px;
+    border-radius: 10px;
     border: none;
     font-size: 14px;
-    height: 40px;
-    background: none;
   }
   
   .compose-input::placeholder {

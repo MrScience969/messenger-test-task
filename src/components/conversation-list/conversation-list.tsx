@@ -18,10 +18,12 @@ function ConversationList({userConversations, onChatClick}: ConversationList): J
         <Toolbar
           title="Messenger"
           leftItems={[
-            <ToolbarButton key="cog" icon="ion-ios-cog" />
+            <ToolbarButton key="cog" toolbarName={'settings'} toolbarImg={'/src/assets/settings.svg'}/>
           ]}
           rightItems={[
-            <ToolbarButton key="add" icon="ion-ios-add-circle-outline" />
+            <ToolbarButton key="plus" toolbarName={'plus'} toolbarImg={'/src/assets/plus.svg'}/>,
+            <ToolbarButton key="contacts" toolbarName={'contacts'} toolbarImg={'/src/assets/contacts.svg'}/>
+
           ]}
         />
         <ConversationSearch />
@@ -30,7 +32,7 @@ function ConversationList({userConversations, onChatClick}: ConversationList): J
             <ConversationListItem
               key={index}
               photo={'/src/assets/untitled-user.jpg'}
-              name={conversation.words[0]}
+              name={conversation.words[0] ? conversation.words[0]: 'untitled'}
               text={conversation.paragraph}
               onClick={onChatClick}
             />
