@@ -10,7 +10,7 @@ import MessengerScreen from '../../pages/messenger-screen/messenger-screen';
 
 function App(): JSX.Element {
   const [loginData, setLoginData] = useState<TConversation | null>(null)
-  const [conversations, setConversations] = useState<TConversation[] | null>(null)
+  const [conversations, setConversations] = useState<TConversation[]>([])
   const isUserAuth = !!loginData;
 
   const getConversations = (email: string) => {

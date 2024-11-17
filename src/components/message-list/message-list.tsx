@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
@@ -6,18 +6,37 @@ import './message-list.css';
 import ToolbarButton from '../toolbar-button/toolbar-button';
 import Toolbar from '../toolbar/toolbar';
 import Compose from '../compose/compose';
-import { TMessage } from '../../types/messages';
 import Message from '../message/message';
 import { TConversation } from '../../types/conversation';
 
-const MY_USER_ID = 'apple';
-
 type MessengerProps = {
-  currentMessages: TConversation[] | null;
+  currentMessages: TConversation[];
   currentChat: string;
+  conversations: TConversation[]; 
+  setConversations: (loginData: TConversation[]) => void;
+  loginData: TConversation;
 }
 
-function MessageList({currentChat, currentMessages}: MessengerProps): JSX.Element {
+function MessageList({currentChat, currentMessages, conversations, setConversations, loginData}: MessengerProps): JSX.Element {
+    const [newMessage, setNewMessage] = useState<string>('')
+
+    const onSendNewMessage = () => {
+      
+      const newMessageData: TConversation = Object.assign(loginData);
+      newMessageData.posts.push({
+        "words": [currentChat],
+        "sentence": newMessage,
+        "sentences": "",
+        "paragraph": ""
+      })
+      
+      setConversations([...conversations, newMessageData])
+      setNewMessage('');
+
+      console.log(loginData);
+      console.log(newMessageData);
+
+    }
 
     return(
       <div className="message-list">
@@ -34,14 +53,24 @@ function MessageList({currentChat, currentMessages}: MessengerProps): JSX.Elemen
           <Message
             key={message.id}
             message={message}
-            isMine={true}
+            isMine={loginData.email === message.email}
           />
-        ))}
+        )
+        )}
       </div>
 
-        <Compose rightItems={[
-          <ToolbarButton key="send-message" toolbarName={'send-message'} toolbarImg={'/src/assets/send.svg'}/>,
-        ]}/>
+        <Compose
+          newMessage={newMessage}
+          setNewMessage={setNewMessage}
+          rightItems={[
+            <ToolbarButton
+              key="send-message"
+              toolbarName={'send-message'} 
+              toolbarImg={'/src/assets/send.svg'}
+              onClick={onSendNewMessage}
+            />,
+          ]}
+        />
       </div>
     );
 }

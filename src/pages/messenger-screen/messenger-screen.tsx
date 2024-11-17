@@ -7,13 +7,13 @@ import { CONVERSATIONS } from '../../mocks/conversations';
 
 type MessengerProps = {
     loginData: TConversation;
-    conversations: TConversation[] | null;
-    setConversations: (loginData: TConversation[] | null) => void;
+    conversations: TConversation[];
+    setConversations: (loginData: TConversation[]) => void;
 }
 
 function MessengerScreen({loginData, conversations, setConversations}: MessengerProps): JSX.Element {
   const [currentChat, setCurrentChat] = useState<string>('')
-  const [currentMessages, setCurrentMessages] = useState<TConversation[] | null>(null)
+  const [currentMessages, setCurrentMessages] = useState<TConversation[]>([])
 
   const onChatClick = (conversationTitle: string) => {
     const chatMessages = CONVERSATIONS.slice().filter((message) => (message.posts.map((post) => post.words.includes(conversationTitle))).includes(true))
@@ -29,7 +29,14 @@ function MessengerScreen({loginData, conversations, setConversations}: Messenger
         </div>
 
         <div className="scrollable content">
-          {currentChat && <MessageList currentChat={currentChat} currentMessages={currentMessages}/>}
+          {currentChat && 
+            <MessageList
+            currentChat={currentChat} 
+            currentMessages={currentMessages}
+            conversations={conversations}
+            setConversations={setConversations}
+            loginData={loginData}
+          />}
         </div>
       </div>
     );
